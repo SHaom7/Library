@@ -2,7 +2,7 @@
 
 namespace Library.Interfaces
 {
-    public interface IMemeberService
+    public interface IMemberService
     {
         Task<IEnumerable<Member>> GetAll();
         Task<Member> GetById(Guid id);

@@ -42,7 +42,7 @@ namespace Library.Services
 
         public async Task<Book> GetById(Guid id)
         {
-            return await _context.Books.FirstOrDefaultAsync(i => i.BookId == id);
+            return await _context.Books.Include(i => i.MemberBooks).FirstOrDefaultAsync(i => i.BookId == id);
         }
 
         public bool SaveBook()
@@ -53,7 +53,8 @@ namespace Library.Services
 
         public bool UpdateBook(Book book)
         {
-            throw new NotImplementedException();
+            _context.Update(book);
+            return SaveBook();
         }
     }
 }

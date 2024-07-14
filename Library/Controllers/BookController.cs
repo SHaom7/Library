@@ -1,4 +1,5 @@
 ﻿using Library.Data;
+using Library.Interfaces;
 using Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,23 +8,24 @@ namespace Library.Controllers
 {
     public class BookController : Controller
     {
-        private readonly AppDbContext _context;
-        public BookController(AppDbContext context)
+        private readonly IBookService _bookService;
+        public BookController(IBookService bookService)
         {
-            _context = context;
+            _bookService = bookService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var book = _context.Books.ToList();
+            IEnumerable<Book> books = await _bookService.GetAll();
+            return View(books);
+        }
+        public async Task<IActionResult> Details(Guid id)
+        {
+            Book book = await _bookService.GetById(id);
             return View(book);
         }
-        public IActionResult Details(Guid id)
+
+        public ActionResult Create()
         {
-            Book book = _context.Books
-                    .Include(b => b.MemberBooks)
-                    .ThenInclude(mb => mb.Member)
-                    .FirstOrDefault(x => x.BookId == id);
-            return View(book);
         }
     }
 }

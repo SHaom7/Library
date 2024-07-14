@@ -1,4 +1,6 @@
 using Library.Data;
+using Library.Interfaces;
+using Library.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library
@@ -11,6 +13,8 @@ namespace Library
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddScoped<IMemberService, MemberService>();
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));

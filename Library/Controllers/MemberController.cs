@@ -1,4 +1,5 @@
 ﻿using Library.Data;
+using Library.Interfaces;
 using Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,23 +8,20 @@ namespace Library.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly AppDbContext _context;
-        public MemberController(AppDbContext context)
+        private readonly IMemberService _memberService;
+        public MemberController(IMemberService memberService)
         {
-            _context = context;
+            _memberService = memberService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var members = _context.Members.ToList();
+            IEnumerable<Member> members = await _memberService.GetAll();
             return View(members);
         }
 
-        public IActionResult Details(Guid id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            Member member = _context.Members
-                    .Include(b => b.MemberBooks)
-                    .ThenInclude(mb => mb.Member)
-                    .FirstOrDefault(x => x.MemberId == id);
+            Member member = await _memberService.GetById(id);
             return View(member);
         }
     }

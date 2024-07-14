@@ -106,7 +106,8 @@ namespace Library.Services
 
         public bool UpdateMember(Member member)
         {
-            throw new NotImplementedException();
+            _context.Update(member);
+            return SaveMember();
         }
     }
 }

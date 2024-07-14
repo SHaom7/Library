@@ -1,0 +1,35 @@
+﻿@using Library.Models
+@{
+    ViewData["Title"] = "Members";
+}
+
+@model List<Member>;
+
+<div class="text-center">
+    <h1 class="display-4">Members</h1>
+    <br />
+    <table class="table bg-gradient">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Member mem in Model)
+                {
+                    <tr>
+                        <td>@mem.MemberId</td>
+                        <td>@mem.Name</td>
+                        <td>
+                            <a asp-controller="Member" asp-action="Detail" asp-route-itemid="@mem.MemberId" type="btn btn-success" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a asp-controller="Member" asp-action="DeleteExpenses" asp-route-id="@mem.MemberId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

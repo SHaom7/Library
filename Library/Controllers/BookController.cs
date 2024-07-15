@@ -1,6 +1,7 @@
 ﻿using Library.Data;
 using Library.Interfaces;
 using Library.Models;
+using Library.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +10,11 @@ namespace Library.Controllers
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
-        public BookController(IBookService bookService)
+        private readonly IMemberService _memberService;
+        public BookController(IBookService bookService, IMemberService memberService)
         {
             _bookService = bookService;
+            _memberService = memberService;
         }
         public async Task<IActionResult> Index()
         {
@@ -45,6 +48,18 @@ namespace Library.Controllers
 
             _bookService.AddBook(book);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Borrow(Guid id)
+        {
+            
+            Guid memberId = GetCurrentUserId(); // Replace with your user authentication logic
+
+            var member = await _memberService.GetById(memberId);
+
+            await _memberService.BorrowBook(member, id);
+
+            return RedirectToAction("Detail", new { id = id });
         }
 
 

@@ -48,7 +48,7 @@ namespace Library.Services
         public bool SaveBook()
         {
             var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
+            return saved > 0;
         }
 
         public bool UpdateBook(Book book)

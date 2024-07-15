@@ -50,17 +50,17 @@ namespace Library.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Borrow(Guid id)
-        {
+        //public async Task<IActionResult> Borrow(Guid id)
+        //{
             
-            Guid memberId = GetCurrentUserId(); // Replace with your user authentication logic
+        //    Guid memberId = GetCurrentUserId(); // Replace with your user authentication logic
 
-            var member = await _memberService.GetById(memberId);
+        //    var member = await _memberService.GetById(memberId);
 
-            await _memberService.BorrowBook(member, id);
+        //    await _memberService.BorrowBook(member, id);
 
-            return RedirectToAction("Detail", new { id = id });
-        }
+        //    return RedirectToAction("Detail", new { id = id });
+        //}
 
 
     }

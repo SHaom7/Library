@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Models
 {
-    public class Member :IdentityUser
+    public class Member
     {
         [Key]
         public Guid MemberId { get; set; } = Guid.NewGuid();

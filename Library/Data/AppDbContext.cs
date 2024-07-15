@@ -1,15 +1,14 @@
 ﻿using Library.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using System.Net;
 
 namespace Library.Data
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<AppUSer>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
+            : base(options)
         {
         }
 
@@ -19,6 +18,11 @@ namespace Library.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .HasKey(ul => new { ul.LoginProvider, ul.ProviderKey });
+
             modelBuilder.Entity<MemberBook>()
                 .HasKey(mb => new { mb.MemberId, mb.BookId });
 

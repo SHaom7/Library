@@ -24,5 +24,10 @@ namespace Library.Controllers
             Member member = await _memberService.GetById(id);
             return View(member);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

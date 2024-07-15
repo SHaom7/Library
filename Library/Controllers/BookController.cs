@@ -26,6 +26,18 @@ namespace Library.Controllers
 
         public ActionResult Create()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Book book)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(book);
+            }
+            _bookService.AddBook(book);
+            return RedirectToAction("Index");
         }
     }
 }

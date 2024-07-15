@@ -12,7 +12,7 @@ namespace Library.Models
         [Key]
         public Guid MemberId { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
-        public List<MemberBook> MemberBooks { get; set; }
+        public List<MemberBook>? MemberBooks { get; set; }
 
     }
 }

@@ -1,22 +1,6 @@
 ﻿@model Book
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Shop Item - Start Bootstrap Template</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-</head>
-<body>
-    <!-- Product section-->
+
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
@@ -24,31 +8,35 @@
                 <div class="col-md-6">
                     <div class="small mb-1"> @Model.BookId </div>
                     <h1 class="display-5 fw-bolder"> @Model.Title </h1>
-                    <div class="fs-5 mb-5"> 
-                        <h3>Borrowed by:</h3>
-                        <ul>
-                            @foreach(MemberBook member in Model.MemberBooks)
-                            {
-                                <li>Member ID: @member.MemberId Member Name: @member.Member.Name</li>
-                            }
-                        </ul>
+                    <div class="fs-5 mb-5">
+                    @if (Model.MemberBooks != null && Model.MemberBooks.Any())
+                    {
+                        <div class="fs-5 mb-5">
+                            <h3>Borrowed by:</h3>
+                            <ul>
+                                @foreach (MemberBook member in Model.MemberBooks)
+                                {
+                                    <li>Member ID: @member.MemberId Member Name: @member.Member.Name</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>This book has not been borrowed yet.</p>
+                    }
                     </div>
                     <p class="lead">@Model.Brief</p>
                     <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            Add to cart
-                        </button>
+                    <div class="d-flex">
+                        <div class="me-3">
+                            <span class="badge bg-secondary">Copies: @Model.Copies</span>
+                        </div>                          
+                        <div class="btn-group">
+                            <a asp-controller="Book" asp-action="Detail" asp-route-id="@Model.BookId" class="btn btn-sm btn-outline-dark"> Borrow </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-</body>
-</html>

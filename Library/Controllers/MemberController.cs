@@ -1,6 +1,7 @@
 ﻿using Library.Data;
 using Library.Interfaces;
 using Library.Models;
+using Library.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ namespace Library.Controllers
             return View(members);
         }
 
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Detail(Guid id)
         {
             Member member = await _memberService.GetById(id);
             return View(member);
@@ -28,6 +29,24 @@ namespace Library.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Member member)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    System.Diagnostics.Debug.WriteLine(error.ErrorMessage);
+                }
+                return View(member);
+            }
+
+            _memberService.AddMember(member);
+            return RedirectToAction("Index");
         }
     }
 }

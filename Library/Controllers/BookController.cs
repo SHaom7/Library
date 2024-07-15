@@ -18,7 +18,7 @@ namespace Library.Controllers
             IEnumerable<Book> books = await _bookService.GetAll();
             return View(books);
         }
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Detail(Guid id)
         {
             Book book = await _bookService.GetById(id);
             return View(book);
@@ -46,5 +46,7 @@ namespace Library.Controllers
             _bookService.AddBook(book);
             return RedirectToAction("Index");
         }
+
+
     }
 }
